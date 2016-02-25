@@ -23,7 +23,7 @@ function updateDeal() {
     try {
       var calculatedDiscount = ((data.ItemAttributes.ListPrice.Amount -
                                  data.OfferSummary.LowestNewPrice.Amount) / 100)
-                                 .toFixed();
+                                 .toFixed(2);
       $('.deal-discount').text('Save $' + calculatedDiscount + '!');
       $('.deal-discount').show();
     } catch (ex) {

@@ -111,9 +111,10 @@ def get_random_amazon_result() -> str:
 
         # Make sure that we actually have a deal
         try:
-            if specific_result['ItemAttributes']['ListPrice']['Amount'] >= specific_result['OfferSummary']['LowestNewPrice']['Amount']:
-                # List price is bigger than or equal to lowest price.
-                logging.info('Item "%s" had a list price bigger than lowest.',
+            specific_result_discount = (int(specific_result['ItemAttributes']['ListPrice']['Amount']) -
+                                        int(specific_result['OfferSummary']['LowestNewPrice']['Amount']))
+            if specific_result_discount <= 0:
+                logging.info('Item "%s" had a list price less than lowest.',
                              specific_result['ASIN'])
                 continue
         except KeyError:
@@ -122,7 +123,8 @@ def get_random_amazon_result() -> str:
             continue
 
         # Good result! Return it.
-        logging.info('Returning valid item "%s".', specific_result['ASIN'])
+        logging.info('Returning valid item "%s" with discount of $%.2f.',
+                     specific_result['ASIN'], specific_result_discount/100)
         return specific_result
 
 @app.route('/deal.json')
