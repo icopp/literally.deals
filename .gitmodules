@@ -1,3 +1,0 @@
-[submodule "words"]
-	path = vendor/words
-	url = https://github.com/atebits/Words
