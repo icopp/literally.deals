@@ -74,54 +74,71 @@ amazon = bottlenose.Amazon(AWS_ACCESS_KEY_ID,
 def get_random_amazon_result() -> str:
     """Get a random product result from Amazon."""
 
-    random_word = random.choice(WORDS)
-    random_search_index = random.choice(SEARCH_INDEXES)
-    logging.info('Searching Amazon for "%s" in SearchIndex "%s".',
-                 random_word, random_search_index['name'])
+    while True:
+        random_word = random.choice(WORDS)
+        random_search_index = random.choice(SEARCH_INDEXES)
+        logging.info('Searching Amazon for "%s" in SearchIndex "%s".',
+                     random_word, random_search_index['name'])
 
-    try:
-        result = amazon.ItemSearch(
-            Keywords=random_word,
-            MinPercentageOff=5,
-            SearchIndex=random_search_index['name'],
-            Sort=random_search_index['sort'],
-            ResponseGroup='Images,ItemAttributes,EditorialReview,OfferSummary'
-        )
-    except Exception:
-        logging.error('Attempting to search Amazon failed.')
-        return get_random_amazon_result()
-
-    result = xmltodict.parse(result)
-
-    try:
-        if result['ItemSearchResponse']['Items']['Request']['Errors']['Error']['Code'] == "AWS.ECommerceService.NoExactMatches":
-            return get_random_amazon_result()
-    except KeyError:
-        # There's no error code, which is to say, it was successful.
         try:
-            return random.choice(result['ItemSearchResponse']['Items']['Item'])
+            result = xmltodict.parse(amazon.ItemSearch(
+                Keywords=random_word,
+                MinPercentageOff=5,
+                SearchIndex=random_search_index['name'],
+                Sort=random_search_index['sort'],
+                ResponseGroup='Images,ItemAttributes,EditorialReview,OfferSummary'
+            ))
+        except Exception:
+            logging.error('Attempting to search Amazon failed.')
+            continue
+
+        try:
+            result_error = result['ItemSearchResponse']['Items']['Request']['Errors']['Error']['Code']
+            if result_error:
+                logging.info('Search for "%s" in SearchIndex "%s" returned an error: %s',
+                             random_word, random_search_index['name'], result_error)
+                continue
         except KeyError:
-            return get_random_amazon_result()
+            logging.info('Search for "%s" in SearchIndex "%s" was successful.',
+                         random_word, random_search_index['name'])
+
+        try:
+            specific_result = random.choice(result['ItemSearchResponse']['Items']['Item'])
+        except KeyError:
+            logging.error('Search for "%s" in SearchIndex "%s" found no items.',
+                          random_word, random_search_index['name'])
+            continue
+
+        # Make sure that we actually have a deal
+        try:
+            if specific_result['ItemAttributes']['ListPrice']['Amount'] >= specific_result['OfferSummary']['LowestNewPrice']['Amount']:
+                # List price is bigger than or equal to lowest price.
+                logging.info('Item "%s" had a list price bigger than lowest.',
+                             specific_result['ASIN'])
+                continue
+        except KeyError:
+            logging.info('Item "%s" had no lowest or list price.',
+                         specific_result['ASIN'])
+            continue
+
+        # Good result! Return it.
+        logging.info('Returning valid item "%s".', specific_result['ASIN'])
+        return specific_result
 
 @app.route('/deal.json')
 def random_deal() -> str:
     """Return JSON for a random Amazon deal."""
-
-    random_amazon_result = get_random_amazon_result()
-    logging.info(random_amazon_result)
-
-    return json.dumps(random_amazon_result)
+    return json.dumps(get_random_amazon_result())
 
 @app.route('/')
 def index() -> str:
-    return render_template('index.html',
-                           google_analytics_id=GOOGLE_ANALYTICS_ID)
+    """Render the homepage."""
+    return render_template('index.html', google_analytics_id=GOOGLE_ANALYTICS_ID)
 
 @app.errorhandler(404)
 def page_not_found(error) -> str:
     """Custom 404 page."""
-    return render_template('404.html',
-                           google_analytics_id=GOOGLE_ANALYTICS_ID)
+    return render_template('404.html', google_analytics_id=GOOGLE_ANALYTICS_ID)
 
 if __name__ == '__main__':
     app.run()
