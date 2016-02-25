@@ -1,3 +1,4 @@
 bottlenose
 flask
+gunicorn
 xmltodict

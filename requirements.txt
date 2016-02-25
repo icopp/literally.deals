@@ -6,6 +6,7 @@
 #
 Bottlenose==0.6.3
 Flask==0.10.1
+gunicorn==19.4.5
 itsdangerous==0.24        # via flask
 Jinja2==2.8               # via flask
 MarkupSafe==0.23          # via jinja2
