@@ -1,0 +1,6 @@
+# OS X
+._*
+.DS_Thumbs
+
+# Heroku
+.env
