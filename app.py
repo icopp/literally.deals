@@ -7,7 +7,7 @@ import random
 
 import bottlenose
 import xmltodict
-from flask import Flask
+from flask import Flask, render_template
 
 logging.basicConfig(level=logging.INFO)
 
@@ -15,6 +15,7 @@ AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 AWS_ASSOCIATE_TAG = os.environ.get('AWS_ASSOCIATE_TAG')
 SECRET_KEY = os.environ.get('SECRET_KEY')
+GOOGLE_ANALYTICS_ID = os.environ.get('GOOGLE_ANALYTICS_ID')
 
 with open('vendor/words/Words/en.txt') as f:
     WORDS = f.read().splitlines()
@@ -113,12 +114,14 @@ def random_deal() -> str:
 
 @app.route('/')
 def index() -> str:
-    return app.send_static_file('index.html')
+    return render_template('index.html',
+                           google_analytics_id=GOOGLE_ANALYTICS_ID)
 
 @app.errorhandler(404)
 def page_not_found(error) -> str:
     """Custom 404 page."""
-    return app.send_static_file('404.html')
+    return render_template('404.html',
+                           google_analytics_id=GOOGLE_ANALYTICS_ID)
 
 if __name__ == '__main__':
     app.run()
