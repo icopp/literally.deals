@@ -26,7 +26,7 @@
         </p>
 
         <p class="card-text text-xs-center">
-          <a href="#" class="btn btn-primary another-deal">Another!</a>
+          <a href="#" class="btn btn-primary another-deal" {% if google_analytics_id %}onclick="ga('send', 'event', 'click', 'Another')"{% endif %}>Another!</a>
         </p>
       </div><!-- .card -->
     </div><!-- .col-sm-6 -->
@@ -53,11 +53,11 @@
         <p class="card-text deal-discount"></p>
 
         <p class="card-text text-xs-center">
-          <a class="btn btn-success deal-link" href="#"><span class="deal-price"></span></a>
+          <a class="btn btn-success deal-link" href="#" {% if google_analytics_id %}onclick="ga('send', 'event', 'click', 'Buy')"{% endif %}><span class="deal-price"></span></a>
         </p>
 
         <p class="card-text text-xs-center">
-          <a href="#" class="btn btn-primary another-deal">Another!</a>
+          <a href="#" class="btn btn-primary another-deal" {% if google_analytics_id %}onclick="ga('send', 'event', 'click', 'Another')"{% endif %}>Another!</a>
         </p>
       </div><!-- .card -->
     </div><!-- .col-sm-6 -->
