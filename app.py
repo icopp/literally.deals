@@ -132,13 +132,14 @@ def get_random_amazon_result() -> str:
         logging.info('Returning valid item "%s" with discount of $%.2f.',
                      specific_result['ASIN'], specific_result_discount/100)
 
-        REDIS.setex('current_random_product', specific_result, 3)
-        return specific_result
+        specific_result_json = json.dumps(specific_result)
+        REDIS.setex('current_random_product', specific_result_json, 3)
+        return specific_result_json
 
 @app.route('/deal.json')
 def random_deal() -> str:
     """Return JSON for a random Amazon deal."""
-    return json.dumps(get_random_amazon_result())
+    return get_random_amazon_result()
 
 @app.route('/')
 def index() -> str:
