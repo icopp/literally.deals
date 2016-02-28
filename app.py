@@ -6,6 +6,7 @@ import logging
 import random
 
 import bottlenose
+import redis
 import xmltodict
 from flask import Flask, render_template
 
@@ -16,6 +17,7 @@ AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 AWS_ASSOCIATE_TAG = os.environ.get('AWS_ASSOCIATE_TAG')
 SECRET_KEY = os.environ.get('SECRET_KEY')
 GOOGLE_ANALYTICS_ID = os.environ.get('GOOGLE_ANALYTICS_ID')
+REDIS = redis.from_url(os.environ.get('REDIS_URL'))
 
 with open('vendor/words/Words/en.txt') as f:
     WORDS = f.read().splitlines()
@@ -74,6 +76,10 @@ amazon = bottlenose.Amazon(AWS_ACCESS_KEY_ID,
 def get_random_amazon_result() -> str:
     """Get a random product result from Amazon."""
 
+    cached_result = REDIS.get('current_random_product')
+    if cached_result != None:
+        return cached_result
+
     while True:
         random_word = random.choice(WORDS)
         random_search_index = random.choice(SEARCH_INDEXES)
@@ -122,9 +128,11 @@ def get_random_amazon_result() -> str:
                          specific_result['ASIN'])
             continue
 
-        # Good result! Return it.
+        # Good result! Cache for 3 seconds and return it.
         logging.info('Returning valid item "%s" with discount of $%.2f.',
                      specific_result['ASIN'], specific_result_discount/100)
+
+        REDIS.setex('current_random_product', specific_result, 3)
         return specific_result
 
 @app.route('/deal.json')

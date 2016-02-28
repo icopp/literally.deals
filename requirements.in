@@ -1,4 +1,5 @@
 bottlenose
 flask
 gunicorn
+redis
 xmltodict
