@@ -1,53 +1,43 @@
 
-function updateDeal() {
-  $('.deal').hide();
-  $('.spinner').show();
+var vm = new Vue({
+  el: 'body',
+  data: {
+    anotherReady: false,
+    itemLoaded: false,
+    currentItem: {}
+  },
+  ready: function () {
+    this.getItem();
+  },
+  methods: {
+    getItem: function (event) {
+      this.anotherReady = false;
+      this.itemLoaded = false;
 
-  $('.another-deal').hide();
-  $('.another-deal-spinner').show();
+      this.$http.get('/deal.json').then(function (response) {
+        console.log('Deal request succeeded.');
+        console.log(response);
 
-  $.getJSON('/deal.json', function(data) {
-    $('.deal-name').text(data.ItemAttributes.Title);
-    $('.deal-image').attr('src', decodeURIComponent(data.LargeImage.URL));
-    $('.deal-link').attr('href', decodeURIComponent(data.DetailPageURL));
+        var currentItem = {};
+        currentItem.title       = response.data.ItemAttributes.Title;
+        currentItem.imageUrl    = (response.data.LargeImage.URL || false);
+        currentItem.url         = response.data.DetailPageURL;
+        currentItem.lowestPrice = response.data.OfferSummary.LowestNewPrice.FormattedPrice;
+        currentItem.description = (response.data.EditorialReviews.EditorialReview.Content || false);
+        currentItem.discount    = ((response.data.ItemAttributes.ListPrice.Amount -
+                                    response.data.OfferSummary.LowestNewPrice.Amount) / 100)
+                                   .toFixed(2);
+        this.currentItem = currentItem;
+        this.itemLoaded = true;
 
-    try {
-      $('.deal-price').text('Buy for ' + data.OfferSummary.LowestNewPrice.FormattedPrice);
-    } catch (ex) {
-      $('.deal-price').text('Buy Now');
+        setTimeout(function () {
+          console.log('Ready to get another.');
+          vm.anotherReady = true;
+        }, 3000);
+      }, function (response) {
+        console.log('Deal request failed. Try again!');
+        this.getItem();
+      });
     }
-
-    try {
-      $('.deal-description').html(data.EditorialReviews.EditorialReview.Content);
-      $('.deal-description').show();
-    } catch (ex) {
-      $('.deal-description').hide();
-    }
-
-    try {
-      var calculatedDiscount = ((data.ItemAttributes.ListPrice.Amount -
-                                 data.OfferSummary.LowestNewPrice.Amount) / 100)
-                                 .toFixed(2);
-      $('.deal-discount').text('Save $' + calculatedDiscount + '!');
-      $('.deal-discount').show();
-    } catch (ex) {
-      $('.deal-discount').hide();
-    }
-
-    $('.spinner').hide();
-    $('.deal').show();
-
-    window.setTimeout(function() {
-      $('.another-deal-spinner').hide();
-      $('.another-deal').show();
-    }, 3000);
-  });
-}
-
-$(function() {
-  updateDeal();
-});
-
-$('.another-deal').on('click', function() {
-  updateDeal();
+  }
 });

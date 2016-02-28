@@ -12,75 +12,86 @@
 {% endblock %}
 
 {% block content %}
-  <div class="row spinner">
+  <noscript>
+    <div class="card card-block m-b-1">
+      <p class="card-text">Sorry, but this site only works with Javascript enabled, and with browsers newer than IE 8.</p>
+    </div>
+  </noscript>
 
+  <div class="row" style="display: none;" v-show="true">
     <div class="col-sm-8">
       <div class="card card-block">
-        <p class="card-text text-xs-center">
-          <i class="fa fa-spinner fa-4x fa-pulse"></i>
+        <div class="text-xs-center">
+          <img class="deal-image"
+            v-bind:src="currentItem.imageUrl"
+            v-if="itemLoaded && currentItem.imageUrl">
+        </div>
+
+        <h2 class="text-xs-center h4"
+          v-text="currentItem.title"
+          v-if="itemLoaded">
+          &hellip;
+        </h2>
+
+        <p class="card-text m-b-1 deal-description"
+          v-html="currentItem.description"
+          v-if="itemLoaded && currentItem.description">
+          &hellip;
+        </p>
+
+        <p class="card-text m-b-1 m-t-1 text-xs-center"
+          v-if="!itemLoaded">
+          <i class="fa fa-spinner fa-4x fa-spin"></i>
         </p>
       </div><!-- .card -->
     </div><!-- .col-sm-8 -->
 
     <div class="col-sm-4">
       <div class="card card-block">
-        <p class="card-text text-xs-center hidden-xs-down">
+        <p class="card-text text-xs-center"
+          v-text="'Save $' + currentItem.discount + '!'"
+          v-if="itemLoaded">
+          &hellip;
+        </p>
+
+        <p class="card-text text-xs-center"
+          v-if="!itemLoaded">
           <i class="fa fa-spinner fa-pulse"></i>
         </p>
 
-        <p class="card-text text-xs-center hidden-xs-down">
-          <a class="btn btn-success btn-block disabled" href="#">
+        <p class="card-text text-xs-center">
+          <a class="btn btn-success btn-block" href="#"
+            {% if google_analytics_id %}onclick="ga('send', 'event', 'click', 'Buy')"{% endif %}
+            v-if="itemLoaded"
+            v-bind:href="currentItem.url"
+            v-text="'Buy for ' + currentItem.lowestPrice">
+          </a>
+
+          <a class="btn btn-success btn-block btn-disabled" href="#"
+            v-if="!itemLoaded">
             <i class="fa fa-spinner fa-pulse"></i>
           </a>
         </p>
 
         <p class="card-text text-xs-center">
-          <a href="#" class="btn btn-primary btn-block disabled">
-            <i class="fa fa-spinner fa-pulse"></i>
+          <a href="#" class="btn btn-primary btn-block" {% if google_analytics_id %}onclick="ga('send', 'event', 'click', 'Another')"{% endif %}
+            v-if="anotherReady"
+            v-on:click="getItem">
+            Another!
           </a>
-        </p>
-      </div><!-- .card -->
-    </div><!-- .col-sm-4 -->
 
-  </div>
-  <div class="row deal">
-
-    <div class="col-sm-8">
-      <div class="card card-block">
-        <img class="deal-image">
-
-        <p class="card-text">
-          <h2 class="text-xs-center deal-name h4"></h2>
-        </p>
-
-        <div class="text-xs-left card-text m-b-1">
-          <p class="card-text deal-description"></p>
-        </div>
-      </div><!-- .card -->
-    </div><!-- .col-sm-8 -->
-
-    <div class="col-sm-4">
-      <div class="card card-block">
-        <p class="card-text deal-discount"></p>
-
-        <p class="card-text text-xs-center">
-          <a class="btn btn-success btn-block deal-link" href="#" {% if google_analytics_id %}onclick="ga('send', 'event', 'click', 'Buy')"{% endif %}><span class="deal-price"></span></a>
-        </p>
-
-        <p class="card-text text-xs-center">
-          <a href="#" class="btn btn-primary btn-block another-deal" {% if google_analytics_id %}onclick="ga('send', 'event', 'click', 'Another')"{% endif %}>Another!</a>
-
-          <a href="#" class="btn btn-primary btn-block disabled another-deal-spinner">
+          <a href="#" class="btn btn-primary btn-block disabled"
+            v-if="!anotherReady">
             <i class="fa fa-spinner fa-pulse"></i>
           </a>
         </p>
       </div><!-- .card -->
     </div><!-- .col-sm-4 -->
-
-  </div>
+  </div><!-- .row -->
 {% endblock %}
 
 {% block pagescripts %}
-  <script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.16/vue.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.7.0/vue-resource.min.js"></script>
   <script src="/js/app.js"></script>
 {% endblock %}
