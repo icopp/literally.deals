@@ -29,11 +29,15 @@
         </p>
 
         <p class="card-text text-xs-center hidden-xs-down">
-          <i class="fa fa-spinner fa-pulse"></i>
+          <a class="btn btn-success btn-block disabled" href="#">
+            <i class="fa fa-spinner fa-pulse"></i>
+          </a>
         </p>
 
         <p class="card-text text-xs-center">
-          <a href="#" class="btn btn-primary another-deal" {% if google_analytics_id %}onclick="ga('send', 'event', 'click', 'Another')"{% endif %}>Another!</a>
+          <a href="#" class="btn btn-primary btn-block disabled">
+            <i class="fa fa-spinner fa-pulse"></i>
+          </a>
         </p>
       </div><!-- .card -->
     </div><!-- .col-sm-4 -->
@@ -60,11 +64,15 @@
         <p class="card-text deal-discount"></p>
 
         <p class="card-text text-xs-center">
-          <a class="btn btn-success deal-link" href="#" {% if google_analytics_id %}onclick="ga('send', 'event', 'click', 'Buy')"{% endif %}><span class="deal-price"></span></a>
+          <a class="btn btn-success btn-block deal-link" href="#" {% if google_analytics_id %}onclick="ga('send', 'event', 'click', 'Buy')"{% endif %}><span class="deal-price"></span></a>
         </p>
 
         <p class="card-text text-xs-center">
-          <a href="#" class="btn btn-primary another-deal" {% if google_analytics_id %}onclick="ga('send', 'event', 'click', 'Another')"{% endif %}>Another!</a>
+          <a href="#" class="btn btn-primary btn-block another-deal" {% if google_analytics_id %}onclick="ga('send', 'event', 'click', 'Another')"{% endif %}>Another!</a>
+
+          <a href="#" class="btn btn-primary btn-block disabled another-deal-spinner">
+            <i class="fa fa-spinner fa-pulse"></i>
+          </a>
         </p>
       </div><!-- .card -->
     </div><!-- .col-sm-4 -->

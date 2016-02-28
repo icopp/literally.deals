@@ -2,6 +2,10 @@
 function updateDeal() {
   $('.deal').hide();
   $('.spinner').show();
+
+  $('.another-deal').hide();
+  $('.another-deal-spinner').show();
+
   $.getJSON('/deal.json', function(data) {
     $('.deal-name').text(data.ItemAttributes.Title);
     $('.deal-image').attr('src', decodeURIComponent(data.LargeImage.URL));
@@ -32,6 +36,11 @@ function updateDeal() {
 
     $('.spinner').hide();
     $('.deal').show();
+
+    window.setTimeout(function() {
+      $('.another-deal-spinner').hide();
+      $('.another-deal').show();
+    }, 3000);
   });
 }
 
