@@ -19,14 +19,15 @@ var vm = new Vue({
         console.log(response);
 
         var currentItem = {};
-        currentItem.title       = response.data.ItemAttributes.Title;
-        currentItem.imageUrl    = (response.data.LargeImage.URL || false);
-        currentItem.url         = response.data.DetailPageURL;
-        currentItem.lowestPrice = response.data.OfferSummary.LowestNewPrice.FormattedPrice;
-        currentItem.description = (response.data.EditorialReviews.EditorialReview.Content || false);
-        currentItem.discount    = ((response.data.ItemAttributes.ListPrice.Amount -
-                                    response.data.OfferSummary.LowestNewPrice.Amount) / 100)
-                                   .toFixed(2);
+        currentItem.title          = response.data.ItemAttributes.Title;
+        currentItem.imageUrl       = (response.data.LargeImage.URL || false);
+        currentItem.url            = response.data.DetailPageURL;
+        currentItem.lowestPrice    = response.data.OfferSummary.LowestNewPrice.FormattedPrice;
+        currentItem.lowestPriceRaw = response.data.OfferSummary.LowestNewPrice.Amount;
+        currentItem.description    = (response.data.EditorialReviews.EditorialReview.Content || false);
+        currentItem.discount       = ((response.data.ItemAttributes.ListPrice.Amount -
+                                       response.data.OfferSummary.LowestNewPrice.Amount) / 100)
+                                      .toFixed(2);
         this.currentItem = currentItem;
         this.itemLoaded = true;
 

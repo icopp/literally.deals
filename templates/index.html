@@ -61,9 +61,9 @@
 
         <p class="card-text text-xs-center">
           <a class="btn btn-success btn-block" href="#"
-            {% if google_analytics_id %}onclick="ga('send', 'event', 'click', 'Buy')"{% endif %}
             v-if="itemLoaded"
             v-bind:href="currentItem.url"
+            {% if google_analytics_id %}v-bind:onclick="'ga(\'send\', \'event\', \'click\', \'Buy\', \'' + currentItem.lowestPriceRaw + '\')'"{% endif %}
             v-text="'Buy for ' + currentItem.lowestPrice">
           </a>
 
