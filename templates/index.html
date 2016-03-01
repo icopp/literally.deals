@@ -63,7 +63,7 @@
           <a class="btn btn-success btn-block" href="#"
             v-if="itemLoaded"
             v-bind:href="currentItem.url"
-            {% if google_analytics_id %}v-bind:onclick="'ga(\'send\', \'event\', \'click\', \'Buy\', \'' + currentItem.lowestPriceRaw + '\')'"{% endif %}
+            {% if google_analytics_id %}v-bind:onclick="'ga(\'send\', \'event\', \'buttons\', \'click\', \'Buy\', \'' + currentItem.lowestPriceRaw + '\')'"{% endif %}
             v-text="'Buy for ' + currentItem.lowestPrice">
           </a>
 
@@ -74,7 +74,7 @@
         </p>
 
         <p class="card-text text-xs-center">
-          <a href="#" class="btn btn-primary btn-block" {% if google_analytics_id %}onclick="ga('send', 'event', 'click', 'Another')"{% endif %}
+          <a href="#" class="btn btn-primary btn-block" {% if google_analytics_id %}onclick="ga('send', 'event', 'buttons', 'click', 'Another')"{% endif %}
             v-if="anotherReady"
             v-on:click="getItem">
             Another!
