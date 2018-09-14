@@ -8,11 +8,13 @@
   "private": true,
   "engines": {
     "node": "^8 || ^10",
-    "yarn": "^1.9.4"
+    "yarn": "^1.9"
   },
   "scripts": {
     "prepublishOnly": "run-s build",
-    "deploy": "now --public deploy",
+    "deploy": "run-s deploy:now deploy:alias",
+    "deploy:now": "now deploy --public",
+    "deploy:alias": "now alias",
     "clean": "rimraf dist",
     "prebuild": "run-s clean",
     "build": "cross-env NODE_ENV=production parcel build -t node src/index.ts",

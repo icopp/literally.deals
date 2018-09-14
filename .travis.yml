@@ -1,10 +1,13 @@
 language: node_js
 node_js:
-  - "node"
+  - node
 cache:
+  yarn: true
   directories:
-    - "node_modules"
-before_deploy: npm install now --no-save
+    - node_modules
+before_deploy:
+  - yarn global add yarn
+  - yarn global add now
 deploy:
   - provider: script
     script:

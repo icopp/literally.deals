@@ -8,10 +8,12 @@
   "private": true,
   "engines": {
     "node": "^8 || ^10",
-    "yarn": "^1.9.4"
+    "yarn": "^1.9"
   },
   "scripts": {
-    "deploy": "now --public deploy",
+    "deploy": "run-s deploy:now deploy:alias",
+    "deploy:now": "now deploy --public",
+    "deploy:alias": "now alias",
     "dev": "next",
     "build": "next build",
     "start": "next start"
