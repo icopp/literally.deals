@@ -25,6 +25,13 @@
     "watch:nodemon:run": "cross-env NODE_ENV=development nodemon -r dotenv/config dist/index.js",
     "start": "cross-env NODE_ENV=production node dist/index.js"
   },
+  "now": {
+    "alias": "api.literally.deals",
+    "env": {
+      "EBAY_APP_ID": "@literally-deals-ebay-app-id",
+      "EBAY_API_SERVER": "@literally-deals-ebay-api-server"
+    }
+  },
   "dependencies": {
     "apicache": "^1.2.3",
     "cors": "^2.8.4",

@@ -16,6 +16,12 @@
     "build": "next build",
     "start": "next start"
   },
+  "now": {
+    "alias": "literally.deals",
+    "env": {
+      "API_SERVER": "@literally-deals-api-server"
+    }
+  },
   "dependencies": {
     "@types/next": "^6.1.4",
     "@zeit/next-css": "^0.2.0",

@@ -1,0 +1,40 @@
+language: node_js
+node_js:
+  - "node"
+cache:
+  directories:
+    - "node_modules"
+before_deploy: npm install now --no-save
+deploy:
+  - provider: script
+    script:
+      - cd packages/api.literally.deals
+      - now --token $NOW_TOKEN
+    skip_cleanup: true
+    on:
+      all_branches: true
+      master: false
+  - provider: script
+    script:
+      - cd packages/literally.deals
+      - now --token $NOW_TOKEN
+    skip_cleanup: true
+    on:
+      all_branches: true
+      master: false
+  - provider: script
+    script:
+      - cd packages/api.literally.deals
+      - now --token $NOW_TOKEN
+      - now alias --token $NOW_TOKEN
+    skip_cleanup: true
+    on:
+      master: true
+  - provider: script
+    script:
+      - cd packages/literally.deals
+      - now --token $NOW_TOKEN
+      - now alias --token $NOW_TOKEN
+    skip_cleanup: true
+    on:
+      master: true
