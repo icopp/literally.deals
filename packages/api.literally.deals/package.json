@@ -6,8 +6,13 @@
   "author": "Ian Copp <copp.ian@gmail.com>",
   "license": "MIT",
   "private": true,
+  "engines": {
+    "node": "^8 || ^10",
+    "yarn": "^1.9.4"
+  },
   "scripts": {
     "prepublishOnly": "run-s build",
+    "deploy": "now --public deploy",
     "clean": "rimraf dist",
     "prebuild": "run-s clean",
     "build": "cross-env NODE_ENV=production parcel build -t node src/index.ts",
@@ -17,7 +22,8 @@
     "watch:tsc": "tsc --noEmit",
     "watch:nodemon": "run-s watch:nodemon:wait watch:nodemon:run",
     "watch:nodemon:wait": "wait-on dist/index.js",
-    "watch:nodemon:run": "cross-env NODE_ENV=development nodemon -r dotenv/config dist/index.js"
+    "watch:nodemon:run": "cross-env NODE_ENV=development nodemon -r dotenv/config dist/index.js",
+    "start": "cross-env NODE_ENV=production node dist/index.js"
   },
   "dependencies": {
     "apicache": "^1.2.3",

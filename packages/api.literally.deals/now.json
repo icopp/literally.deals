@@ -1,0 +1,6 @@
+{
+  "env": {
+    "EBAY_APP_ID": "@literally-deals-ebay-app-id",
+    "EBAY_API_SERVER": "@literally-deals-ebay-api-server"
+  }
+}
