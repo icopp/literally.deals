@@ -5,15 +5,15 @@ cache:
   yarn: true
   directories:
     - node_modules
-before_deploy:
+before_install:
   - yarn global add yarn
+before_deploy:
   - yarn global add now
 deploy:
   - provider: script
     script:
       - cd packages/api.literally.deals
       - now --token $NOW_TOKEN
-    skip_cleanup: true
     on:
       all_branches: true
       master: false
@@ -21,7 +21,6 @@ deploy:
     script:
       - cd packages/literally.deals
       - now --token $NOW_TOKEN
-    skip_cleanup: true
     on:
       all_branches: true
       master: false
@@ -30,7 +29,6 @@ deploy:
       - cd packages/api.literally.deals
       - now --token $NOW_TOKEN
       - now alias --token $NOW_TOKEN
-    skip_cleanup: true
     on:
       master: true
   - provider: script
@@ -38,6 +36,5 @@ deploy:
       - cd packages/literally.deals
       - now --token $NOW_TOKEN
       - now alias --token $NOW_TOKEN
-    skip_cleanup: true
     on:
       master: true
