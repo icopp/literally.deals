@@ -2,8 +2,27 @@
 ._*
 .DS_Thumbs
 
-# Python
-__pycache__
+# Next
+.next
 
-# Heroku
+# Node
+node_modules
+npm-debug.log*
 .env
+.env.*
+
+# Yarn
+yarn-debug.log*
+yarn-error.log*
+
+# Jest
+coverage
+
+# Parcel
+.cache
+dist
+
+# macOS
+.DS_Store
+
+
