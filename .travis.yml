@@ -7,7 +7,7 @@ cache:
     - node_modules
 before_install:
   - yarn global add yarn
-  - export PATH="$PATH:`yarn global bin`"
+  - export PATH="`yarn global bin`:$PATH"
 before_deploy:
   - yarn global add now
 script: []
