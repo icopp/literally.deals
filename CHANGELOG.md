@@ -1,3 +1,14 @@
+# [3.0.0](https://github.com/icopp/literally.deals/compare/v2.1.0...v3.0.0) (2020-03-13)
+
+### Features
+
+- **Next.js:** rebuild to use Next.js 9.3 features
+  ([8128c5d](https://github.com/icopp/literally.deals/commit/8128c5df558cdc93887f07ad01b692b513e325b7))
+
+### BREAKING CHANGES
+
+- **Next.js:** rebuild to use Next.js 9.3 features
+
 # [2.1.0](https://github.com/icopp/literally.deals/compare/v2.0.0...v2.1.0) (2020-03-13)
 
 ### Features
