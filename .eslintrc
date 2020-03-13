@@ -1,0 +1,73 @@
+{
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2019,
+    "impliedStrict": true,
+    "sourceType": "module"
+  },
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "standard",
+    "plugin:eslint-comments/recommended",
+    "plugin:unicorn/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "plugin:ramda/recommended",
+    "prettier",
+    "prettier/react",
+    "prettier/standard",
+    "prettier/unicorn"
+  ],
+  "plugins": ["ramda", "react-hooks", "simple-import-sort"],
+  "rules": {
+    "react/prop-types": "off",
+    "simple-import-sort/sort": "warn",
+    "unicorn/prevent-abbreviations": [
+      "error",
+      {
+        "checkFilenames": false,
+        "whitelist": {
+          "getInitialProps": true,
+          "getServerSideProps": true,
+          "getStaticProps": true
+        }
+      }
+    ]
+  },
+  "globals": {
+    "fetch": false,
+    "globalThis": true
+  },
+  "overrides": [
+    {
+      "files": ["**/*.{ts,tsx}"],
+      "extends": [
+        "plugin:@typescript-eslint/recommended",
+        "prettier/@typescript-eslint"
+      ]
+    }
+  ],
+  "settings": {
+    "import/resolver": {
+      "alias": {
+        "map": [["~", "./src"]],
+        "extensions": [".js", ".json", ".jsx", ".ts", ".tsx", ".d.ts"]
+      },
+      "node": {
+        "extensions": [".js", ".json", ".jsx", ".ts", ".tsx", ".d.ts"]
+      }
+    },
+    "react": {
+      "version": "detect"
+    }
+  }
+}

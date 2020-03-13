@@ -1,0 +1,20 @@
+{
+  "alias": "literally.deals",
+  "build": {
+    "env": {
+      "EBAY_APP_ID": "@literally-deals-ebay-app-id",
+      "EBAY_CERT_ID": "@literally-deals-ebay-cert-id",
+      "EBAY_ENVIRONMENT": "@literally-deals-ebay-environment"
+    }
+  },
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "headers": {
+        "cache-control": "s-maxage=300"
+      },
+      "dest": "/api/$1",
+      "continue": true
+    }
+  ]
+}

@@ -1,10 +1,10 @@
-import fetch from 'isomorphic-fetch'
+import fetch from 'isomorphic-unfetch'
 
 const BIG_IMAGE_REGEXP = /class="img img\d00" .*? src="(.*?)"/
 
 export default async function scrapeEbayListing(
   listingUrl: string
-): Promise<{ bigImageUrl: string | null }> {
+): Promise<string | null> {
   const response = await fetch(listingUrl)
 
   if (!response.ok || !response.body) {
@@ -14,7 +14,5 @@ export default async function scrapeEbayListing(
   const text = await response.text()
   const matches = text.match(BIG_IMAGE_REGEXP)
 
-  return {
-    bigImageUrl: matches && matches[1]
-  }
+  return matches?.[1] ?? null
 }

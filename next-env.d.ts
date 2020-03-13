@@ -1,3 +1,6 @@
+/// <reference types="next" />
+/// <reference types="next/types/global" />
+
 /**
  * @todo Submit to DefinitelyTyped.
  */
