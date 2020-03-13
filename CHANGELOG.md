@@ -1,3 +1,10 @@
+# [3.1.0](https://github.com/icopp/literally.deals/compare/v3.0.0...v3.1.0) (2020-03-13)
+
+### Features
+
+- improve CPU performance of progress bar rendering
+  ([988b1e3](https://github.com/icopp/literally.deals/commit/988b1e37b41d802aaef056ed6872120c65154ec1))
+
 # [3.0.0](https://github.com/icopp/literally.deals/compare/v2.1.0...v3.0.0) (2020-03-13)
 
 ### Features
