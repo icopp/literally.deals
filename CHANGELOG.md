@@ -1,3 +1,12 @@
+# [3.2.0](https://github.com/icopp/literally.deals/compare/v3.1.0...v3.2.0) (2020-03-15)
+
+### Features
+
+- change loading to happen entirely client-side for better rendering
+  ([7be19da](https://github.com/icopp/literally.deals/commit/7be19da7f3ac1bd12cc1ce095e4686fbd51f6486))
+- pull site meta info from package.json instead of hardcoding
+  ([6bf44dd](https://github.com/icopp/literally.deals/commit/6bf44dd6ef9199625cbca99b434111561ecf4977))
+
 # [3.1.0](https://github.com/icopp/literally.deals/compare/v3.0.0...v3.1.0) (2020-03-13)
 
 ### Features
