@@ -9,7 +9,7 @@
   "bugs": "https://github.com/icopp/literally.deals/issues",
   "private": true,
   "engines": {
-    "node": "^10 || ^12",
+    "node": ">=10",
     "yarn": "^1"
   },
   "scripts": {
