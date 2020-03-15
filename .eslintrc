@@ -44,8 +44,7 @@
     ]
   },
   "globals": {
-    "fetch": false,
-    "globalThis": true
+    "fetch": false
   },
   "overrides": [
     {
