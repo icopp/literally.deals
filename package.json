@@ -129,8 +129,5 @@
     "prettier": "^1.19.0",
     "semantic-release": "^17.0.0",
     "typescript": "^3.8.0"
-  },
-  "resolutions": {
-    "**/fsevents": "^2.1.0"
   }
 }
