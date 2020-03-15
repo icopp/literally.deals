@@ -87,6 +87,7 @@
     "query-string": "^6.11.0",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
+    "react-spinners": "^0.8.0",
     "rword": "^3.1.0",
     "swr": "^0.1.0"
   },
@@ -128,5 +129,8 @@
     "prettier": "^1.19.0",
     "semantic-release": "^17.0.0",
     "typescript": "^3.8.0"
+  },
+  "resolutions": {
+    "**/fsevents": "^2.1.0"
   }
 }
